@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<base href="/">
+	<link rel="stylesheet" href="style.css" src="style.css">
+	<title>Task Tracker</title>
+</head>
+<body>
+	<main>
+		<form action="/" method="post">
+			<input type="text" name="description" id="description">
+			<select name="complete" id="complete">
+				<option value="true">Completed</option>
+				<option value="false">Incomplete</option>
+			</select>
+			<button type="submit" id="addTaskBtn">+ Add Task</button>
+		</form>
+
+		<div class="task-list" id="task-list">
+
+		</div>
+	</main>
+	<script type="text/javascript">
+		fetch('/tasks.json')
+        .then((response) => response.json())
+        .then((tasks) => {
+            var html = '';
+            for (var i = 0; i < tasks.length; i++) {
+                html += "<div class='task-tile' id='task-tile'>" +
+                    "<h2 class='task-h2'>" + tasks[i].description + "</h2>" +
+                    "<p class='complete'>" + tasks[i].complete + "</p>" +
+                    "</div>";
+            }
+            document.getElementById("task-list").innerHTML = html;
+        });
+
+		const form = document.querySelector('form');
+
+		form.addEventListener('submit', (e) => {
+			const formData = new FormData(form);
+			const obj = Object.fromEntries(formData);
+
+			const json = JSON.stringify(obj)
+			
+		});
+	</script>
+</body>
+</html>
